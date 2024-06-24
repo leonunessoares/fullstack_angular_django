@@ -29,14 +29,14 @@ export class IndexComponent  implements OnInit  {
          console.log('Pessoa excluída com sucesso!');
     })
   }
-  //verPeso(altura: number , sexo:string){   
-  //  this.pessoaService.calcularPesoIdeal(altura, sexo).subscribe(data => {
-  //    this.openModal(data.peso_ideal.toFixed(2));
-  //  });
-  //}
+  verPeso(altura: number , sexo:string){   
+    this.pessoaService.calcularPesoIdeal(altura, sexo).subscribe(data => {
+      this.openModal(data.peso_ideal.toFixed(2));
+    });
+  }
 
-  //openModal(pesoIdeal: number): void {
-  //  const modalRef = this.modalService.open(ModalComponent);
-  //  modalRef.componentInstance.pesoIdeal = pesoIdeal;
-  //}
+  openModal(pesoIdeal: number): void {
+    const modalRef = this.modalService.open(ModalComponent);
+    modalRef.componentInstance.pesoIdeal = pesoIdeal;
+  }
 }

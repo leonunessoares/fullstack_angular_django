@@ -69,7 +69,7 @@ class PessoaTask:
         serializer = PessoaSerializer(pessoas, many=True)
         return Response(serializer.data)
     
-class Peso:
+class PessoaPeso:
 
     def calcular_peso_ideal(self, altura, sexo):
         if sexo == 'M':

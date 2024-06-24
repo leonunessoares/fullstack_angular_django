@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class PessoaService {
   private apiUrl = 'http://localhost:8000/api/pessoas/';
+  private pesoUrl = 'http://localhost:8000/api/calcular_peso_ideal/';
 
   constructor(private http: HttpClient) { }
 
@@ -28,6 +29,10 @@ export class PessoaService {
 
   deletePessoa(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}${id}/`, { headers: this.getHeaders() });
+  }
+
+  calcularPesoIdeal(altura: number, sexo: string): Observable<any> {
+    return this.http.post(this.pesoUrl, { altura, sexo }, { headers: this.getHeaders() });
   }
 
   private getHeaders(): HttpHeaders {

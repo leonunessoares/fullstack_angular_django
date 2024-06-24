@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from .models import Pessoa
 from .serializers import PessoaSerializer
-from .services import PessoaService
+from .services import PessoaService, PessoaPeso
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -38,6 +38,6 @@ def calcular_peso_ideal(request):
     if altura is None or sexo is None:
         return Response({'error': 'Altura e sexo são obrigatórios'}, status=status.HTTP_400_BAD_REQUEST)
     
-    service = PessoaService()
+    service = PessoaPeso()
     peso_ideal = service.calcular_peso_ideal(float(altura), sexo)
     return Response({'peso_ideal': peso_ideal}, status=status.HTTP_200_OK)
