@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Pessoas</title>
+    <script>
+        async function fetchPessoas() {
+            const response = await fetch('http://localhost:8000/api/pessoas/');
+            const pessoas = await response.json();
+            const listaPessoas = document.getElementById('listaPessoas');
+            listaPessoas.innerHTML = '';
+            pessoas.forEach(pessoa => {
+                const li = document.createElement('li');
+                li.textContent = `${pessoa.nome} - ${pessoa.cpf}`;
+                li.onclick = () => selectPessoa(pessoa);
+                listaPessoas.appendChild(li);
+            });
+        }
+
+        function selectPessoa(pessoa) {
+            document.getElementById('id').value = pessoa.id;
+            document.getElementById('nome').value = pessoa.nome;
+            document.getElementById('data_nasc').value = pessoa.data_nasc;
+            document.getElementById('cpf').value = pessoa.cpf;
+            document.getElementById('sexo').value = pessoa.sexo;
+            document.getElementById('altura').value = pessoa.altura;
+            document.getElementById('peso').value = pessoa.peso;
+            document.getElementById('editMode').value = true;
+        }
+
+        async function addPessoa() {
+            const pessoa = getPessoaFormData();
+            const response = await fetch('http://localhost:8000/api/pessoas/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(pessoa),
+            });
+            if (response.ok) {
+                fetchPessoas();
+                clearForm();
+            }
+        }
+
+        async function updatePessoa() {
+            const pessoa = getPessoaFormData();
+            const response = await fetch(`http://localhost:8000/api/pessoas/${pessoa.id}/`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(pessoa),
+            });
+            if (response.ok) {
+                fetchPessoas();
+                clearForm();
+            }
+        }
+
+        async function deletePessoa() {
+            const id = document.getElementById('id').value;
+            const response = await fetch(`http://localhost:8000/api/pessoas/${id}/`, {
+                method: 'DELETE',
+            });
+            if (response.ok) {
+                fetchPessoas();
+                clearForm();
+            }
+        }
+
+        function getPessoaFormData() {
+            return {
+                id: document.getElementById('id').value,
+                nome: document.getElementById('nome').value,
+                data_nasc: document.getElementById('data_nasc').value,
+                cpf: document.getElementById('cpf').value,
+                sexo: document.getElementById('sexo').value,
+                altura: document.getElementById('altura').value,
+                peso: document.getElementById('peso').value,
+            };
+        }
+
+        function clearForm() {
+            document.getElementById('id').value = '';
+            document.getElementById('nome').value = '';
+            document.getElementById('data_nasc').value = '';
+            document.getElementById('cpf').value = '';
+            document.getElementById('sexo').value = '';
+            document.getElementById('altura').value = '';
+            document.getElementById('peso').value = '';
+            document.getElementById('editMode').value = false;
+        }
+
+        function calculatePesoIdeal() {
+            const altura = parseFloat(document.getElementById('altura').value);
+            const sexo = document.getElementById('sexo').value;
+            let pesoIdeal;
+            if (sexo === 'M') {
+                pesoIdeal = (72.7 * altura) - 58;
+            } else {
+                pesoIdeal = (62.1 * altura) - 44.7;
+            }
+            alert(`Peso Ideal: ${pesoIdeal.toFixed(2)} kg`);
+        }
+
+        window.onload = fetchPessoas;
+    </script>
+</head>
+<body>
+    <h2>Gerenciamento de Pessoas</h2>
+    <form>
+        <input type="hidden" id="id">
+        <input type="hidden" id="editMode" value="false">
+        <label>Nome:</label>
+        <input type="text" id="nome" name="nome">
+        <label>Data de Nascimento:</label>
+        <input type="date" id="data_nasc" name="data_nasc">
+        <label>CPF:</label>
+        <input type="text" id="cpf" name="cpf">
+        <label>Sexo:</label>
+        <select id="sexo" name="sexo">
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+        </select>
+        <label>Altura:</label>
+        <input type="number" step="0.01" id="altura" name="altura">
+        <label>Peso:</label>
+        <input type="number" step="0.1" id="peso" name="peso">
+        <button type="button" onclick="addPessoa()">Incluir</button>
+        <button type="button" onclick="updatePessoa()">Alterar</button>
+        <button type="button" onclick="deletePessoa()">Excluir</button>
+        <button type="button" onclick="fetchPessoas()">Pesquisar</button>
+        <button type="button" onclick="calculatePesoIdeal()">Calcular Peso Ideal</button>
+    </form>
+    <ul id="listaPessoas"></ul>
+</body>
+</html>
