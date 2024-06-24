@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PessoaService } from '../pessoa.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create',
@@ -9,23 +9,25 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
-
+  
   form: FormGroup ;
 
   constructor(
+    private fb: FormBuilder,
     public pessoaService: PessoaService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
 
-    this.form = new FormGroup({
-      nome:  new FormControl('', [ Validators.required, Validators.minLength(6), Validators.maxLength(30)]),
-      data_nasc:  new FormControl(''),
-      cpf:  new FormControl(''),
-      sexo:  new FormControl(''),
-      altura:  new FormControl(''),
-      peso:  new FormControl('')      
+    this.form = this.fb.group({
+      id: [''],
+      nome: ['', Validators.required],
+      data_nasc: ['', Validators.required],
+      cpf: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+      sexo: ['', Validators.required],
+      altura: ['', [Validators.required, Validators.min(0.5)]],
+      peso: ['', [Validators.required, Validators.min(0.1)]]
     });
 
   }

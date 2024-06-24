@@ -17,6 +17,10 @@
                   id="nome"
                   type="text"
                   class="form-control">
+                  <div *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched" 
+                  class="alert alert-danger">
+                    Nome é obrigatório.
+                  </div>
               
               </div>              
               
@@ -29,7 +33,10 @@
                 id="data_nasc"
                 type="date"
                 class="form-control">
-              
+                <div *ngIf="form.get('data_nasc')?.invalid && form.get('data_nasc')?.touched" 
+                  class="alert alert-danger">
+                    Data é obrigatória.
+                  </div>
             </div>              
             
           </div>
@@ -41,7 +48,10 @@
                 id="cpf"
                 type="string"
                 class="form-control">
-              
+                <div *ngIf="form.get('cpf')?.invalid && form.get('cpf')?.touched" 
+                  class="alert alert-danger">
+                    CPF é obrigatório.
+                  </div>
             </div>              
             
           </div>
@@ -53,7 +63,10 @@
                 id="sexo"
                 type="string"
                 class="form-control">
-              
+                <div *ngIf="form.get('sexo')?.invalid && form.get('sexo')?.touched" 
+                  class="alert alert-danger">
+                    Campo sexo é obrigatório.
+                  </div>
             </div>              
             
           </div>
@@ -65,7 +78,10 @@
                 id="altura"
                 type="float"
                 class="form-control">
-              
+                <div *ngIf="form.get('altura')?.invalid && form.get('altura')?.touched" 
+                  class="alert alert-danger">
+                    Altura é obrigatório.
+                  </div>
             </div>              
             
           </div>
@@ -77,7 +93,10 @@
                 id="peso"
                 type="float"
                 class="form-control">
-              
+                <div *ngIf="form.get('peso')?.invalid && form.get('peso')?.touched" 
+                  class="alert alert-danger">
+                    Peso é obrigatório.
+                  </div>
             </div>              
             
           </div>
