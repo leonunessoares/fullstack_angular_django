@@ -3,29 +3,29 @@ from rest_framework import status
 from .models import Pessoa
 from .serializers import PessoaSerializer
 
-class PessoaService:
+class PessoaServico:
 
     def create_pessoa(self, data):
-        task = PessoaTask()
+        task = PessoaTarefa()
         return task.create(data)
 
     def update_pessoa(self, pk, data):
-        task = PessoaTask()
+        task = PessoaTarefa()
         return task.update(pk, data)
 
     def delete_pessoa(self, pk):
-        task = PessoaTask()
+        task = PessoaTarefa()
         return task.delete(pk)
 
     def get_pessoa(self, pk):
-        task = PessoaTask()
+        task = PessoaTarefa()
         return task.get(pk)
 
     def get_all_pessoas(self):
-        task = PessoaTask()
+        task = PessoaTarefa()
         return task.get_all()   
     
-class PessoaTask:
+class PessoaTarefa:
 
     def create(self, data):
         serializer = PessoaSerializer(data=data)
